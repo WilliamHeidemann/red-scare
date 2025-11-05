@@ -6,27 +6,27 @@ from Graph.Graph import DirectedGraph, Node
 def dijkstra(graph: DirectedGraph) -> int:
     dist: defaultdict[Node, int | float] = defaultdict(lambda: float('inf'))
     
-    open_nodes = PriorityQueue()
-    open_nodes.put((0, graph.start))
+    openNodes = PriorityQueue()
+    openNodes.put((0, graph.start))
 
     dist[graph.start] = 0
 
-    while not open_nodes.empty():
-        current_distance, node = open_nodes.get()
+    while not openNodes.empty():
+        currentDistance, node = openNodes.get()
 
         # we have found the target node
         if node == graph.end:
-            return current_distance
+            return currentDistance
 
         # we already have a better path here
-        if current_distance > dist[node]:
+        if currentDistance > dist[node]:
             continue
 
         for edge in graph.getNeighbors(node):
-            new_distance = current_distance + edge.cost
-            if new_distance < dist[edge.to]:
-                open_nodes.put((new_distance, edge.to))
-                dist[edge.to] = new_distance
+            newDistance = currentDistance + edge.cost
+            if newDistance < dist[edge.to]:
+                openNodes.put((newDistance, edge.to))
+                dist[edge.to] = newDistance
 
     # we never found target
     return -1
@@ -44,4 +44,5 @@ graphList = []
 
 for graph in graphList:
     graph = prepareGraphForDijkstra(graph)
-    dijkstra(graph)
+    redNodes = dijkstra(graph)
+    print()
