@@ -1,5 +1,6 @@
+from collections import defaultdict
 from pathlib import Path
-from Graph import DirectedGraph
+from Graph import DirectedGraph, Node
 
 class Parser:
     def __init__(self, path):
@@ -40,10 +41,13 @@ class Parser:
 
                 #Get nodes from file
                 nodeLines = list(map(str.strip, lines[2: 2 + nodesCount]))
+                cachedNodes: defaultdict[str, Node] = defaultdict(list)
 
                 for line in nodeLines:
                     id = line.strip().split()[0]
-                    graph.addNode(id, '*' in line)
+                    node : Node = Node(id, '*' in line)
+                    cachedNodes[id] = node
+                    graph.addNode(node)
 
                 if edgesCount <= 0:
                     return graph
@@ -58,9 +62,9 @@ class Parser:
                     start, type, end = line.split()
 
                     if directed:
-                        graph.addDirectedEdge(start, end)
+                        graph.addDirectedEdge(cachedNodes[start], cachedNodes[end])
                     else:
-                        graph.addUndirectedEdge(start, end)
+                        graph.addUndirectedEdge(cachedNodes[start], cachedNodes[end])
                 
                 return graph 
 
