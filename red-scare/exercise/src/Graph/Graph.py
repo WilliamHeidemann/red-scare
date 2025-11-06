@@ -15,11 +15,16 @@ class Edge:
 
 
 class DirectedGraph:
-    def __init__(self, start: Node, end: Node, directed: bool = True):
+    def __init__(self, start: Node, end: Node, redNodes: int, directed: bool = True):
         self.start: Node = start
         self.end: Node = end
         self.edges: defaultdict[Node, list[Edge]] = defaultdict(list)
         self.directed: bool = directed
+        self.redNodes: int = redNodes
+        self.nodes: list[Node] = []
+
+    def addNode(self, id: str, red: bool):
+        self.nodes.append(Node(id, red))
 
     def getNeighbors(self, node: Node):
         return self.edges[node]
