@@ -1,6 +1,7 @@
 from collections import defaultdict
 from queue import PriorityQueue
 from Graph.Graph import DirectedGraph, Node
+from Graph.Parser import Parser
 
 # Oliver's previous implementation, adapted for the problem
 def dijkstra(graph: DirectedGraph) -> int:
@@ -40,7 +41,8 @@ def prepareGraphForDijkstra(graph: DirectedGraph) -> DirectedGraph:
 
 
 # TODO: Get this from parser
-graphList = []
+parser = Parser("red-scare/data")
+graphList = parser.getGraphs()
 
 for graph in graphList:
     graph = prepareGraphForDijkstra(graph)
