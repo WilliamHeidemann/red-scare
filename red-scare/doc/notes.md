@@ -15,3 +15,16 @@
 | **NP-hard** |  | true | true |  |  |
 | **Note** |  |  | Show reduction from some to longest path | add weights for edges to red notes |  |
 | **Person** | Filif |  | Will | Oliver | Emil |
+
+
+## TA Session 12 Nov
+
+- GRAPH TYPES
+- directed
+- undirected
+- directed cyclic
+- undirected cyclic
+
+- use a library to check for properties to identify which category a graph belongs to
+- check wikipedia on how to solve Longest Path for one of the above for sure (acyclic directed)
+- for both NP hardness problems we should be able to solve two of the above categories
