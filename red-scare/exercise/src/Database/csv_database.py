@@ -12,14 +12,14 @@ class CSVDatabase:
     - if you call addEntry("graph.csv", Many=200, Few=600) now, Many and Few will be overwritten
     """
     
-    COLUMNS = ["filename", "None", "Some", "Many", "Few", "Alternate"]
+    COLUMNS = ["filename", "No", "Some", "Many", "Few", "Alternate"]
     
-    def __init__(self, filepath: str):
-        self.filepath = Path(filepath)
-        if not filepath.exists():
-            raise FileNotFoundError(f"CSV file not found: {filepath}")
+    def __init__(self, dbpath: str):
+        self.filepath = Path(dbpath)
+        if not self.filepath.exists():
+            raise FileNotFoundError(f"CSV file not found: {self.filepath}")
 
-        self.df = pd.read_csv(filepath)
+        self.df = pd.read_csv(self.filepath)
     
     def addEntry(self, filename:str, **kwargs):
 
