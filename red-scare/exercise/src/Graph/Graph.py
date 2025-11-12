@@ -7,6 +7,12 @@ class Node:
     id: str
     red: bool
 
+    def __lt__(self, other):
+        return self.id < other.id
+
+    def __eq__(self, other):
+        return self.id == other.id
+
 
 @dataclass
 class Edge:
@@ -40,4 +46,3 @@ class DirectedGraph:
             if edge.to == toNode:
                 edge.cost = weight
                 return
-            
