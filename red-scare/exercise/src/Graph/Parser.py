@@ -1,6 +1,6 @@
 from collections import defaultdict
 from pathlib import Path
-from Graph import DirectedGraph, Node
+from Graph.Graph import DirectedGraph, Node
 
 class Parser:
     @staticmethod
