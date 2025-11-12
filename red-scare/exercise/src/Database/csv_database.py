@@ -4,6 +4,12 @@ from pathlib import Path
 class CSVDatabase:
     """
     Simple class to interact with a csv.
+    USAGE:
+    - provide filename + the values you want to add
+    - you can call addEntry("graph.csv", None=1, Some=5) and then
+    - addEntry("graph.csv", Many=1, Few=6)
+    - then the row "graph.csv" will have values None, Some, Many & Few
+    - if you call addEntry("graph.csv", Many=200, Few=600) now, Many and Few will be overwritten
     """
     
     COLUMNS = ["filename", "None", "Some", "Many", "Few", "Alternate"]
