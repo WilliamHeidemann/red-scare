@@ -2,7 +2,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Node:
     id: str
     red: bool
@@ -15,11 +15,15 @@ class Edge:
 
 
 class DirectedGraph:
-    def __init__(self, start: Node, end: Node, directed: bool = True):
+    def __init__(self, start: Node, end: Node, redNodes: int, directed: bool = True):
         self.start: Node = start
         self.end: Node = end
         self.edges: defaultdict[Node, list[Edge]] = defaultdict(list)
         self.directed: bool = directed
+        self.redNodes: int = redNodes
+
+    def addNode(self, node: Node):
+        self.edges[node]
 
     def getNeighbors(self, node: Node):
         return self.edges[node]
