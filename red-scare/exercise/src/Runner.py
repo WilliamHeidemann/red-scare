@@ -9,6 +9,8 @@ from Alternative.alternate_solver import AlternateSolver
 from NoneSolver.none_solver import NoneSolver
 from Few.few_solver import FewSolver
 
+#import database
+from Database.csv_database import CSVDatabase
 
 
 
@@ -40,18 +42,23 @@ def run_few_solver(graph):
 
 
 def run_all_solvers(graphs: list[tuple[str, object]]):
+
+    db = CSVDatabase("./Database/database.csv")
+
     for filename, graph in graphs:
         # alternate solver
-         result = run_alternate_solver(graph)
-         print(f"AlternateSolver: {result}")
+        result_alt = run_alternate_solver(graph)
+        print(f"AlternateSolver: {result_alt}")
 
         # None solver
-        #result = run_none_solver(graph)
-        #print(f"NoneSolver: {result}")
+        result_none = run_none_solver(graph)
+        print(f"NoneSolver: {result_none}")
 
         # Few solver
         # result = run_few_solver(graph)
         # print(f"FewSolver: {result}")
+
+        db.addEntry(filename=filename, No=f"{result_none}", Alternate=f"{result_alt}")
 
 
 def main():
