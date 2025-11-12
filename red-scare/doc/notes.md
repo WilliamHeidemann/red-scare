@@ -26,5 +26,6 @@
 - undirected cyclic
 
 - use a library to check for properties to identify which category a graph belongs to
+    - NetworkX - Network Analysis in Python
 - check wikipedia on how to solve Longest Path for one of the above for sure (acyclic directed)
 - for both NP hardness problems we should be able to solve two of the above categories
