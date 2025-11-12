@@ -23,10 +23,10 @@ class Parser:
                 first_line = lines[0].strip()
                 nodesCount, edgesCount, redNodesCount = map(int, first_line.split())
                 secondLine = lines[1].strip()
-                start, end = secondLine.split()
+                startStr, endStr = secondLine.split()
 
                 #Create the graph
-                graph: DirectedGraph = DirectedGraph(start=start, end=end, redNodes=redNodesCount)
+                graph: DirectedGraph = DirectedGraph(redNodes=redNodesCount)
 
                 #Get nodes from file
                 nodeLines = list(map(str.strip, lines[2: 2 + nodesCount]))
@@ -35,6 +35,10 @@ class Parser:
                 for line in nodeLines:
                     id = line.strip().split()[0]
                     node : Node = Node(id, '*' in line)
+                    if node.id == startStr:
+                        graph.start = node
+                    elif node.id == endStr:
+                        graph.end = node
                     cachedNodes[id] = node
                     graph.addNode(node)
 
