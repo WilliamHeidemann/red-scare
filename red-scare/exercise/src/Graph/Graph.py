@@ -7,6 +7,12 @@ class Node:
     id: str
     red: bool
 
+    def __lt__(self, other):
+        return self.id < other.id
+
+    def __eq__(self, other):
+        return self.id == other.id
+
 
 @dataclass
 class Edge:
@@ -15,9 +21,9 @@ class Edge:
 
 
 class DirectedGraph:
-    def __init__(self, start: Node, end: Node, redNodes: int, directed: bool = True):
-        self.start: Node = start
-        self.end: Node = end
+    def __init__(self, redNodes: int, directed: bool = True):
+        self.start: Node
+        self.end: Node
         self.edges: defaultdict[Node, list[Edge]] = defaultdict(list)
         self.directed: bool = directed
         self.redNodes: int = redNodes
@@ -26,7 +32,7 @@ class DirectedGraph:
         self.edges[node]
 
     def getNeighbors(self, node: Node):
-        return self.edges[node]
+        return self.edges.get(node, [])
 
     def addDirectedEdge(self, fromNode: Node, toNode: Node, weight: int = 0):
         self.edges[fromNode].append(Edge(toNode, weight))
@@ -40,4 +46,3 @@ class DirectedGraph:
             if edge.to == toNode:
                 edge.cost = weight
                 return
-            
