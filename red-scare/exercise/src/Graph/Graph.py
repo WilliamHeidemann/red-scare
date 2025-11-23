@@ -69,3 +69,26 @@ class DirectedGraph:
             return False
         
         return dfs(self.start)
+    
+    def isCyclic2(self) -> bool:
+        visited = set()
+
+        def dfs(node: Node, parent: Node | None):
+            visited.add(node)
+
+            for edge in self.getNeighbors(node):
+                neighbor = edge.to
+
+                if parent == None or neighbor.id == parent.id:
+                    continue
+
+                if neighbor not in visited:
+                    if dfs(neighbor, node):
+                        return True
+
+                else:
+                    return True
+
+            return False
+
+        return dfs(self.start, None)

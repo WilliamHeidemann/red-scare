@@ -6,9 +6,7 @@ class ManySolver:
         self.graph = graph
 
     def solve(self) -> int:
-        #if self.graph.directed == False:
-        #    return -1
-        if self.graph.isCyclic() == True:
+        if self.graph.isCyclic2() == True:
             return -1
         
         topological_order = self.topologicallySort()
@@ -19,6 +17,9 @@ class ManySolver:
             for edge in self.graph.getNeighbors(current):
 
                 neighbor = edge.to
+
+                if neighbor == current:
+                    continue
 
                 if neighbor.red:
                     red_from_current = red_going_to[current] + 1
