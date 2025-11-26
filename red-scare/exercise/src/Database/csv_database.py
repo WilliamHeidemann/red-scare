@@ -12,7 +12,7 @@ class CSVDatabase:
     - if you call addEntry("graph.csv", Many=200, Few=600) now, Many and Few will be overwritten
     """
     
-    COLUMNS = ["filename", "No", "Some", "Many", "Few", "Alternate"]
+    COLUMNS = ["filename","V", "No", "Some", "Many", "Few", "Alternate"]
     
     def __init__(self, dbpath: str):
         self.filepath = Path(dbpath)

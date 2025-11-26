@@ -54,10 +54,6 @@ def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
     
     db = CSVDatabase("./Database/database.csv")
 
-    cyclic_directed = 0
-    cyclic_undirected = 0
-    acyclic_undirected = 0
-    acyclic_directed = 0
     for filename, graph in graphs:
         # alternate solver
         result_alt = run_alternate_solver(graph)
@@ -81,6 +77,7 @@ def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
 
     
         db.addEntry(filename=filename, 
+                    V=f"{len(graph.edges)}",
                     Many=f"{result_many}",
                     Some=f"{result_some}",
                     Alternate=f"{result_alt}",
