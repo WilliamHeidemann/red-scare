@@ -1,6 +1,8 @@
 from collections import defaultdict, deque
 from dataclasses import dataclass
+import sys
 
+sys.setrecursionlimit(1500)
 
 @dataclass(frozen=True)
 class Node:
@@ -48,47 +50,59 @@ class DirectedGraph:
                 return
 
     def isCyclic(self) -> bool:
+        if self.directed:
+            return self.isCyclicDirected()
+        else:
+            return self.isCyclicUndirected()
+    
+    def isCyclicDirected(self) -> bool:
         visited = set()
         in_stack = set()
 
         def dfs(node):
-            if node in in_stack:
-                return True
-            if node in visited:
-                return False
-            
             visited.add(node)
             in_stack.add(node)
 
-            for edge in self.getNeighbors(node):
+            for edge in self.edges[node]:
                 neighbor = edge.to
-                if dfs(neighbor):
+
+                # If neighbor is in recursion stack → cycle
+                if neighbor in in_stack:
                     return True
-                
-            in_stack.remove(node)
-            return False
-        
-        return dfs(self.start)
-    
-    def isCyclic2(self) -> bool:
-        visited = set()
 
-        def dfs(node: Node, parent: Node | None):
-            visited.add(node)
-
-            for edge in self.getNeighbors(node):
-                neighbor = edge.to
-
-                if parent == None or neighbor.id == parent.id:
-                    continue
-
+                # If neighbor not visited → visit it
                 if neighbor not in visited:
-                    if dfs(neighbor, node):
+                    if dfs(neighbor):
                         return True
 
-                else:
-                    return True
-
+            in_stack.remove(node)
             return False
 
-        return dfs(self.start, None)
+
+        return dfs(self.start)
+
+    def isCyclicUndirected(self) -> bool:
+        parents: dict[Node, Node] = {}
+        queue: deque[Node] = deque()
+        queue.append(self.start)
+        visited: set[Node] = set()
+
+        while queue:
+            current = queue.popleft()
+            if current in visited:
+                continue
+
+            visited.add(current)
+
+            for edge in self.edges[current]:
+                neighbor = edge.to
+                if current in parents and neighbor == parents[current]:
+                    continue
+
+                if neighbor in visited:
+                    return True
+                
+                parents[neighbor] = current
+                queue.append(neighbor)
+        
+        return False

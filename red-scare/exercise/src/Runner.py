@@ -14,9 +14,9 @@ from Many.many_solver import ManySolver
 #from Database.csv_database import CSVDatabase
 
 
-def collect_graphs() -> list[tuple[str, object]]:
+def collect_graphs() -> list[tuple[str, DirectedGraph]]:
     files = InputReader.Read()
-    graphs: list[tuple[str, object]] = []
+    graphs: list[tuple[str, DirectedGraph]] = []
 
     for p in files:
         graph = Parser.createGraph(p)
@@ -45,12 +45,14 @@ def run_many_solver(graph):
     solver = ManySolver(graph)
     return solver.solve()
 
-def run_all_solvers(graphs: list[tuple[str, object]]):
+def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
     #db = CSVDatabase("./Database/database.csv")
 
 
-    cyclic = 0
-    solved = 0
+    cyclic_directed = 0
+    cyclic_undirected = 0
+    acyclic_undirected = 0
+    acyclic_directed = 0
     for filename, graph in graphs:
         # alternate solver
         #result_alt = run_alternate_solver(graph)
@@ -65,16 +67,21 @@ def run_all_solvers(graphs: list[tuple[str, object]]):
         #print(f"FewSolver: {result}")
 
         # Many solver
-        result = run_many_solver(graph)
-        if result == -1:
-            cyclic += 1
+        if graph.directed:
+            if graph.isCyclic():
+                cyclic_directed += 1
+            else:
+                acyclic_directed += 1
         else:
-            solved += 1
+            if graph.isCyclic():
+                cyclic_undirected += 1
+            else:
+                acyclic_undirected += 1
+                
+        result = run_many_solver(graph)
+        
         print(f"ManySolver: {result} - {filename}")
     
-    print(f"Cyclic: {cyclic}")
-    print(f"Solved: {solved}")
-
         #db.addEntry(filename=filename, No=f"{result_none}", Alternate=f"{result_alt}")
 
 
