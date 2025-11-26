@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 from dataclasses import dataclass
 
 
@@ -46,3 +46,49 @@ class DirectedGraph:
             if edge.to == toNode:
                 edge.cost = weight
                 return
+
+    def isCyclic(self) -> bool:
+        visited = set()
+        in_stack = set()
+
+        def dfs(node):
+            if node in in_stack:
+                return True
+            if node in visited:
+                return False
+            
+            visited.add(node)
+            in_stack.add(node)
+
+            for edge in self.getNeighbors(node):
+                neighbor = edge.to
+                if dfs(neighbor):
+                    return True
+                
+            in_stack.remove(node)
+            return False
+        
+        return dfs(self.start)
+    
+    def isCyclic2(self) -> bool:
+        visited = set()
+
+        def dfs(node: Node, parent: Node | None):
+            visited.add(node)
+
+            for edge in self.getNeighbors(node):
+                neighbor = edge.to
+
+                if parent == None or neighbor.id == parent.id:
+                    continue
+
+                if neighbor not in visited:
+                    if dfs(neighbor, node):
+                        return True
+
+                else:
+                    return True
+
+            return False
+
+        return dfs(self.start, None)
