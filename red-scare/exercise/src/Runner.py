@@ -9,6 +9,7 @@ from Alternative.alternate_solver import AlternateSolver
 from NoneSolver.none_solver import NoneSolver
 from Few.few_solver import FewSolver
 from Many.many_solver import ManySolver
+from Some.some_solver import SomeSolver
 
 # import database
 from Database.csv_database import CSVDatabase
@@ -43,6 +44,10 @@ def run_few_solver(graph):
 
 def run_many_solver(graph):
     solver = ManySolver(graph)
+    return solver.solve()
+
+def run_some_solver(graph):
+    solver = SomeSolver(graph)
     return solver.solve()
 
 def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
