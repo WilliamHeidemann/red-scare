@@ -6,5 +6,12 @@ class SomeSolver:
         self.graph = graph
 
     def solve(self) -> bool:
-        return ManySolver(self.graph).solve() > 0
+        manyResult = ManySolver(self.graph).solve()
+        
+        if (manyResult == -2):
+            return False
+        elif (manyResult == -1):
+            return "?"
+        
+        return True
         

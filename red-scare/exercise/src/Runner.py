@@ -72,23 +72,17 @@ def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
         print(f"FewSolver: {result_few}")
 
         # Many solver
-        if graph.directed:
-            if graph.isCyclic():
-                cyclic_directed += 1
-            else:
-                acyclic_directed += 1
-        else:
-            if graph.isCyclic():
-                cyclic_undirected += 1
-            else:
-                acyclic_undirected += 1
-                
-        result_many = run_many_solver(graph)
-        
-        print(f"ManySolver: {result_many} - {filename}")
+        result_many = run_many_solver(graph)        
+        print(f"ManySolver: {result_many}")
+
+        # Some solver
+        result_some = run_some_solver(graph)
+        print(f"SomeSolver: {result_some}")
+
     
         db.addEntry(filename=filename, 
                     Many=f"{result_many}",
+                    Some=f"{result_some}",
                     Alternate=f"{result_alt}",
                     No=f"{result_none}",
                     Few=f"{result_few}")
