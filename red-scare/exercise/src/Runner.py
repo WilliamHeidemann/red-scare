@@ -9,9 +9,10 @@ from Alternative.alternate_solver import AlternateSolver
 from NoneSolver.none_solver import NoneSolver
 from Few.few_solver import FewSolver
 from Many.many_solver import ManySolver
+from Some.some_solver import SomeSolver
 
 # import database
-#from Database.csv_database import CSVDatabase
+from Database.csv_database import CSVDatabase
 
 
 def collect_graphs() -> list[tuple[str, DirectedGraph]]:
@@ -45,44 +46,43 @@ def run_many_solver(graph):
     solver = ManySolver(graph)
     return solver.solve()
 
+def run_some_solver(graph):
+    solver = SomeSolver(graph)
+    return solver.solve()
+
 def run_all_solvers(graphs: list[tuple[str, DirectedGraph]]):
-    #db = CSVDatabase("./Database/database.csv")
+    
+    db = CSVDatabase("./Database/database.csv")
 
-
-    cyclic_directed = 0
-    cyclic_undirected = 0
-    acyclic_undirected = 0
-    acyclic_directed = 0
     for filename, graph in graphs:
         # alternate solver
-        #result_alt = run_alternate_solver(graph)
-        #print(f"AlternateSolver: {result_alt}")
+        result_alt = run_alternate_solver(graph)
+        print(f"AlternateSolver: {result_alt}")
 
         # None solver
-        #result_none = run_none_solver(graph)
-        #print(f"NoneSolver: {result_none}")
+        result_none = run_none_solver(graph)
+        print(f"NoneSolver: {result_none}")
 
         # Few solver
-        #result = run_few_solver(graph)
-        #print(f"FewSolver: {result}")
+        result_few = run_few_solver(graph)
+        print(f"FewSolver: {result_few}")
 
         # Many solver
-        if graph.directed:
-            if graph.isCyclic():
-                cyclic_directed += 1
-            else:
-                acyclic_directed += 1
-        else:
-            if graph.isCyclic():
-                cyclic_undirected += 1
-            else:
-                acyclic_undirected += 1
-                
-        result = run_many_solver(graph)
-        
-        print(f"ManySolver: {result} - {filename}")
+        result_many = run_many_solver(graph)        
+        print(f"ManySolver: {result_many}")
+
+        # Some solver
+        result_some = run_some_solver(graph)
+        print(f"SomeSolver: {result_some}")
+
     
-        #db.addEntry(filename=filename, No=f"{result_none}", Alternate=f"{result_alt}")
+        db.addEntry(filename=filename, 
+                    V=f"{len(graph.edges)}",
+                    Many=f"{result_many}",
+                    Some=f"{result_some}",
+                    Alternate=f"{result_alt}",
+                    No=f"{result_none}",
+                    Few=f"{result_few}")
 
 
 def main():

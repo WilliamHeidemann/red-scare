@@ -4,6 +4,7 @@ import sys
 
 sys.setrecursionlimit(1500)
 
+
 @dataclass(frozen=True)
 class Node:
     id: str
@@ -54,7 +55,7 @@ class DirectedGraph:
             return self.isCyclicDirected()
         else:
             return self.isCyclicUndirected()
-    
+
     def isCyclicDirected(self) -> bool:
         visited = set()
         in_stack = set()
@@ -66,18 +67,15 @@ class DirectedGraph:
             for edge in self.edges[node]:
                 neighbor = edge.to
 
-                # If neighbor is in recursion stack → cycle
                 if neighbor in in_stack:
                     return True
 
-                # If neighbor not visited → visit it
                 if neighbor not in visited:
                     if dfs(neighbor):
                         return True
 
             in_stack.remove(node)
             return False
-
 
         return dfs(self.start)
 
@@ -101,8 +99,8 @@ class DirectedGraph:
 
                 if neighbor in visited:
                     return True
-                
+
                 parents[neighbor] = current
                 queue.append(neighbor)
-        
+
         return False
